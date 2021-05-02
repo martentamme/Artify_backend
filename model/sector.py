@@ -15,6 +15,7 @@ class Sector(db_connection.BaseModel):
 
 if __name__ == '__main__':
     Sector.create_table()
+    # add sectors information to DB
     with open("../sectors_data.csv", encoding="utf-8") as f:
         rd = csv.reader(f)
         for sector_id, name, root_id in rd:

@@ -1,7 +1,7 @@
 from model.user_and_sector import UserAndSector
 
 
-class UserAndSectorInput:
+class UserAndSectorService:
     def __init__(self, user_id, list_of_sectors_id):
         self.user_id = user_id
         self.list_of_sectors_id = list_of_sectors_id

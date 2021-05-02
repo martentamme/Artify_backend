@@ -1,7 +1,7 @@
 from model.user import User
 
 
-class UserData:
+class UserService:
     def __init__(self, name, agreement):
         self.name = name
         self.agreement = agreement

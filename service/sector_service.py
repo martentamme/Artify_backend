@@ -3,7 +3,7 @@ import copy
 from model.sector import Sector
 
 
-class Sectors:
+class SectorService:
     def __init__(self):
         self.sectors_data = []
         self.roots = []
@@ -12,13 +12,16 @@ class Sectors:
         self.main()
 
     def get_sectors_from_db(self):
+        # get sectors from db and add root sectors to root list and others to sectors_data list
         for sector in Sector.select():
             if not sector.root_sector_id:
                 self.roots.append(sector)
-            self.sectors_data.append(sector)
+            else:
+                self.sectors_data.append(sector)
         return self.sectors_data
 
     def sort_sectors(self, roots):
+        # sort the sectors by display order
         if not roots:
             return
         for root in range(len(roots)):
@@ -35,6 +38,7 @@ class Sectors:
         return
 
     def format_data(self):
+        # format sectors by transforming sector obj to sector parameters in json
         for s_id in range(len(self.order)):
             sector = self.order[s_id]
             self.final_sectors_data[s_id] = {}
@@ -43,13 +47,14 @@ class Sectors:
             self.final_sectors_data[s_id]["root_sector_id"] = sector.root_sector_id
             if sector.root_sector_id:
                 self.final_sectors_data[s_id]["root_sector_id"] = sector.root_sector_id.sector_id
-            self.final_sectors_data[s_id]["indent"] = 0
-            self.final_sectors_data[s_id]["indent"] += self.get_root_sector_spacing_count(sector)
+            self.final_sectors_data[s_id]["spaces_count"] = 0
+            self.final_sectors_data[s_id]["spaces_count"] += self.get_root_sector_spaces_count(sector)
 
-    def get_root_sector_spacing_count(self, sector):
+    def get_root_sector_spaces_count(self, sector):
+        # add spaces count to every sector
         for s_key in self.final_sectors_data.keys():
             if sector.root_sector_id and self.final_sectors_data[s_key]["id"] == sector.root_sector_id.sector_id:
-                return self.final_sectors_data[s_key]["indent"] + 1
+                return self.final_sectors_data[s_key]["spaces_count"] + 1
         return 0
 
     def main(self):
