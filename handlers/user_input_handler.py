@@ -18,11 +18,13 @@ class UserInputHandler(tornado.web.RequestHandler, ABC):
 
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
-        print(data)
-        # user teha
         user_data = user_input.UserData(data['name'], data['agreement'])
         user_id = user_data.addUserToDB()
-        # user/sector teha
         user_and_sector_data = user_and_sector_input.UserAndSectorInput(user_id, data['sector_id'])
         user_and_sector_data.addUserAndSectorToDB()
-        self.write(user_id)
+        self.write({"user_id": user_id})
+
+    def put(self):
+        data = tornado.escape.json_decode(self.request.body)
+        user_and_sector_data = user_and_sector_input.UserAndSectorInput(data['user_id'], data['sector_id'])
+        user_and_sector_data.updateSectorChoices()

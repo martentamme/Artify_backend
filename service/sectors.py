@@ -35,7 +35,6 @@ class Sectors:
         return
 
     def format_data(self):
-        print(self.sectors_data)
         for s_id in range(len(self.order)):
             sector = self.order[s_id]
             self.final_sectors_data[s_id] = {}
