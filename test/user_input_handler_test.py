@@ -1,5 +1,3 @@
-import json
-
 from tornado.testing import AsyncHTTPTestCase
 
 import handlers.main_handler
